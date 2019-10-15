@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/ultrasound_opengl.dir/main.cpp.o  -o ultrasound_opengl 
