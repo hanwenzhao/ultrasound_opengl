@@ -14,6 +14,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
+  "/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/CMakeFiles/ultrasound_opengl_lib.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

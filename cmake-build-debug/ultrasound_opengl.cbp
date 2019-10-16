@@ -17,11 +17,67 @@
 					<DistClean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ultrasound_opengl_lib">
+				<Option output="/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/libultrasound_opengl_lib.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 ultrasound_opengl_lib"/>
+					<CompileFile command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="ultrasound_opengl_lib/fast">
+				<Option output="/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/libultrasound_opengl_lib.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 ultrasound_opengl_lib/fast"/>
 					<CompileFile command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -73,19 +129,13 @@
 					<DistClean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j32 -f &quot;/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
 		</Build>
 		<Unit filename="/home/hanwen/CLionProjects/ultrasound_opengl/main.cpp">
+			<Option target="ultrasound_opengl_lib"/>
 			<Option target="ultrasound_opengl"/>
+		</Unit>
+		<Unit filename="/home/hanwen/CLionProjects/ultrasound_opengl/main.h">
+			<Option target="ultrasound_opengl_lib"/>
 		</Unit>
 		<Unit filename="/home/hanwen/CLionProjects/ultrasound_opengl/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

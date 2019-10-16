@@ -65,10 +65,47 @@ CMAKE_SOURCE_DIR = /home/hanwen/CLionProjects/ultrasound_opengl
 CMAKE_BINARY_DIR = /home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug
 
 #=============================================================================
+# Target rules for target CMakeFiles/ultrasound_opengl_lib.dir
+
+# All Build rule for target.
+CMakeFiles/ultrasound_opengl_lib.dir/all:
+	$(MAKE) -f CMakeFiles/ultrasound_opengl_lib.dir/build.make CMakeFiles/ultrasound_opengl_lib.dir/depend
+	$(MAKE) -f CMakeFiles/ultrasound_opengl_lib.dir/build.make CMakeFiles/ultrasound_opengl_lib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/CMakeFiles --progress-num=3,4 "Built target ultrasound_opengl_lib"
+.PHONY : CMakeFiles/ultrasound_opengl_lib.dir/all
+
+# Include target in all.
+all: CMakeFiles/ultrasound_opengl_lib.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/ultrasound_opengl_lib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/ultrasound_opengl_lib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/ultrasound_opengl_lib.dir/rule
+
+# Convenience name for target.
+ultrasound_opengl_lib: CMakeFiles/ultrasound_opengl_lib.dir/rule
+
+.PHONY : ultrasound_opengl_lib
+
+# clean rule for target.
+CMakeFiles/ultrasound_opengl_lib.dir/clean:
+	$(MAKE) -f CMakeFiles/ultrasound_opengl_lib.dir/build.make CMakeFiles/ultrasound_opengl_lib.dir/clean
+.PHONY : CMakeFiles/ultrasound_opengl_lib.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/ultrasound_opengl_lib.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/ultrasound_opengl.dir
 
 # All Build rule for target.
-CMakeFiles/ultrasound_opengl.dir/all:
+CMakeFiles/ultrasound_opengl.dir/all: CMakeFiles/ultrasound_opengl_lib.dir/all
 	$(MAKE) -f CMakeFiles/ultrasound_opengl.dir/build.make CMakeFiles/ultrasound_opengl.dir/depend
 	$(MAKE) -f CMakeFiles/ultrasound_opengl.dir/build.make CMakeFiles/ultrasound_opengl.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target ultrasound_opengl"
@@ -81,7 +118,7 @@ all: CMakeFiles/ultrasound_opengl.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ultrasound_opengl.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/CMakeFiles 4
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/ultrasound_opengl.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/ultrasound_opengl.dir/rule
