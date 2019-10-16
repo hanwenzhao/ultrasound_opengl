@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -g  -shared -Wl,-soname,libultrasound_opengl_lib.so -o libultrasound_opengl_lib.so CMakeFiles/ultrasound_opengl_lib.dir/main.cpp.o 
