@@ -44,8 +44,11 @@ struct screen_data_struct{
 
 /* Data Processing */
 const unsigned char marker[10] = {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
-int i, j, k, marker_index, buffer_length, adc_max, adc_min;;
+int i, j, k, marker_index, buffer_length;
+int adc_max = 0;
+int adc_min = 0;
 bool marker_flag;
+bool skip_flag = false;
 std::vector<int> marker_locations;
 std::vector<scan_data_struct> scan_data;
 std::vector<screen_data_struct> screen_data;
@@ -54,7 +57,7 @@ unsigned long time_stamp;
 unsigned char encoder_char[2];
 unsigned short encoder;
 unsigned char adc_temp[2];
-short adc;
+int16_t adc;
 short buffer[2490];
 unsigned char crc_char[4];
 
@@ -63,6 +66,9 @@ unsigned long changed_endian_4Bytes(unsigned long num);
 std::vector<int> find_marker(std::vector<unsigned char> _file_bytes);
 void file_to_data(std::vector<unsigned char> _file_bytes, std::vector<int> _marker_locations, std::vector<scan_data_struct> & _scan_data);
 void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_data_struct> & _screen_data);
+void normalize_adc(std::vector<screen_data_struct> & _screen_data);
+
+std::vector<int> random_scans;
 
 PFNGLWINDOWPOS2IPROC glWindowPos2i;
 
@@ -87,13 +93,7 @@ static GLint T0 = 0;
 
 GLfloat worldRotation[16] = {1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1};
 
-void Print(const char* format , ...);
-static void ball(double x,double y,double z,double r);
 void display();
-void special(int key,int x,int y);
-void Project(double fov,double asp,double dim);
-void key(unsigned char ch,int x,int y);
-void reshape(int width,int height);
-void idle();
+
 
 #endif //ULTRASOUND_OPENGL_MAIN_H

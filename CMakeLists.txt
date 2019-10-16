@@ -11,7 +11,7 @@ add_library(ultrasound_opengl_lib SHARED
         main.cpp
         main.h)
 
-#add_compile_options(-O3)
+add_compile_options(-O3)
 
 add_executable(ultrasound_opengl main.cpp)
 

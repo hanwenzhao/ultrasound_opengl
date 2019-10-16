@@ -1,16 +1,12 @@
 #include "main.h"
 
-void normalize_adc(std::vector<screen_data_struct> & _screen_data){
-    for (i = 0; i < (int)_screen_data.size(); i++){
-        _screen_data.at(i).I = (_screen_data.at(i).I - adc_min)/adc_max;
-    }
-}
+
 
 int main(int argc,char* argv[]) {
     //std::clock_t begin = clock();
     /* #################### DATA PROCESSING #################### */
     /* read binary file */
-    std::ifstream inFile("/home/hanwen/CLionProjects/ultrasound_opengl/short2.txt", std::ios::in | std::ios::binary);
+    std::ifstream inFile("/home/hanwen/CLionProjects/ultrasound_opengl/dome1.txt", std::ios::in | std::ios::binary);
     /* convert file to bytes vector */
     /* DO NOT USE ISTREAM_ITERATOR*/
     std::vector<unsigned char> file_bytes(
@@ -25,19 +21,52 @@ int main(int argc,char* argv[]) {
     /* normalize adc value */
     normalize_adc(screen_data);
 
-
+    printf("%d %d", adc_max, adc_min);
+    srand((unsigned)time(0));
     // Initialize GLUT and process user parameters
     glutInit(&argc, argv);
     glWindowPos2i =  (PFNGLWINDOWPOS2IPROC) glutGetProcAddress("glWindowPos2i");
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
     // create the window
     glutCreateWindow("ultrasound");
+    glutInitWindowSize(1000, 1000);
     //  Tell GLUT to call "display" when the scene should be drawn
     glutDisplayFunc(display);
+    glutIdleFunc(display);
+    gluOrtho2D((GLdouble) -2500, (GLdouble) 2500, (GLdouble) -5000, (GLdouble) 100);
     //  Pass control to GLUT so it can interact with the user
     glutMainLoop();
     return 0;
 }
+
+void idle() {
+    glutPostRedisplay();   // Post a re-paint request to activate display()
+}
+
+void display(){
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
+    glClear(GL_COLOR_BUFFER_BIT);         // Clear the color buffer (background)
+    glPointSize(1);
+    glBegin(GL_POINTS);
+    for (i = 0; i < 10000; i++){
+        random_scans.push_back(rand() % screen_data.size());
+    }
+
+    for (i = 0; i < random_scans.size(); i++){
+        double intensity = screen_data.at(i).I;
+        if (intensity < 0.7){
+            intensity = 0;
+        }
+        glColor3f(intensity, intensity, intensity);
+        glVertex2d(screen_data.at(i).X,screen_data.at(i).Y);
+    }
+
+    glEnd();
+    glFlush();
+    glutSwapBuffers();
+}
+
 
 void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_data_struct> & _screen_data){
     for (i = 0; i < (int)_scan_data.size(); i++){
@@ -51,9 +80,10 @@ void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_
         else{
             angle = 295 - (295-angle)/6.0;
         }
-        angle = angle - 25;
+        angle = angle - 25; //(int)sizeof(_scan_data.at(i).buffer)
         for (j = 0; j < (int)sizeof(_scan_data.at(i).buffer); j++){
             adc_max = std::max(adc_max, (int)_scan_data.at(i).buffer[j]);
+            //printf("%d %d %d \n", adc_max, adc_min, (int)_scan_data.at(i).buffer[j]);
             adc_min = std::min(adc_min, (int)_scan_data.at(i).buffer[j]);
             screen_data_struct temp_data = {(j+1) * Cos(angle), (j+1) * Sin(angle), 0, (double)_scan_data.at(i).buffer[j]};
             _screen_data.push_back(temp_data);
@@ -78,7 +108,8 @@ void file_to_data(std::vector<unsigned char> _file_bytes, std::vector<int> _mark
         encoder = changed_endian_2Bytes(encoder);
         /* adc */
         /* determine the length of buffer */
-        buffer_length = (int)(_marker_locations.at(1) - _marker_locations.at(0) - sizeof(marker) - sizeof(time_stamp_char) - sizeof(encoder_char) - sizeof(crc_char))/2;
+        buffer_length = (int)(_marker_locations.at(i+1) - _marker_locations.at(i) - sizeof(marker) - sizeof(time_stamp_char) - sizeof(encoder_char) - sizeof(crc_char))/2;
+        printf("%d\n", buffer_length);
         for (j = 0; j < buffer_length; j++){
             for (k = 0; k < (int)sizeof(adc_temp); k++){
                 adc_temp[k] = _file_bytes.at(marker_index + sizeof(marker) + sizeof(time_stamp_char) + sizeof(encoder_char) + j * 2 + k);
@@ -135,18 +166,9 @@ int16_t changed_endian_2Bytes(int16_t value){
     return ((value >> 8) & 0x00ff) | ((value & 0x00ff) << 8);
 }
 
-void display()
-{
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
-    glClear(GL_COLOR_BUFFER_BIT);         // Clear the color buffer (background)
-    glPointSize(1);
-    glBegin(GL_POINTS);
-    for (i = 0; i < screen_data.size(); i++){
-        double intensity = screen_data.at(i).I * 0.3;
-        glColor3f(intensity, intensity, intensity);
-        glVertex2d(screen_data.at(i).X*0.0003,screen_data.at(i).Y*0.0003+0.8);
+void normalize_adc(std::vector<screen_data_struct> & _screen_data){
+    for (i = 0; i < (int)_screen_data.size(); i++){
+        _screen_data.at(i).I = (_screen_data.at(i).I - adc_min)/adc_max;
     }
-    glEnd();
-    glFlush();
-    glutSwapBuffers();
 }
+
