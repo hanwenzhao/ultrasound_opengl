@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/ultrasound_opengl.dir/main.cpp.o"
-  "ultrasound_opengl.pdb"
   "ultrasound_opengl"
+  "ultrasound_opengl.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

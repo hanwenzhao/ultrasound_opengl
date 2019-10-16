@@ -6,25 +6,27 @@
 #define ULTRASOUND_OPENGL_MAIN_H
 
 #include <iostream>
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <GL/freeglut.h>
 #include <GL/glut.h>
 #include <vector>
-#include <stdarg.h>
+#include <cstdarg>
 #include <fstream>
 #include "omp.h"
 #include <algorithm>
-#include <math.h>
+#include <cmath>
 #include <cmath>
 #include <numeric>
 #include <random>
 #include <queue>
 #include <ctime>
 #include <chrono>
-#include <string>
+#include <string.h>
 #include <cinttypes>
-#include <stdint.h>
+#include <cstdint>
+#include <boost/crc.hpp>
+#include <boost/cstdint.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/tokenizer.hpp>
 #include <boost/algorithm/string/classification.hpp>
@@ -32,7 +34,7 @@
 struct scan_data_struct{
     unsigned long time_stamp;
     unsigned short encoder;
-    short buffer[2490];
+    double buffer[2490];
 };
 
 struct screen_data_struct{
@@ -44,11 +46,10 @@ struct screen_data_struct{
 
 /* Data Processing */
 const unsigned char marker[10] = {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
-int i, j, k, marker_index, buffer_length;
-int adc_max = 0;
-int adc_min = 0;
+int i, j, k, marker_index, marker_index_next,  buffer_length;
+int16_t adc_max = 0;
+int16_t adc_min = 0;
 bool marker_flag;
-bool skip_flag = false;
 std::vector<int> marker_locations;
 std::vector<scan_data_struct> scan_data;
 std::vector<screen_data_struct> screen_data;
@@ -56,17 +57,22 @@ unsigned char time_stamp_char[4];
 unsigned long time_stamp;
 unsigned char encoder_char[2];
 unsigned short encoder;
+unsigned char adc_char[2*2490];
 unsigned char adc_temp[2];
+unsigned char crc_char[4];
+uint32_t crc_result;
+unsigned char crc_result_char[4];
+unsigned char crc_input[10+4+2+2*2490];
 int16_t adc;
 short buffer[2490];
-unsigned char crc_char[4];
 
+int compare_crc(unsigned char a[], unsigned char b[], size_t len);
 int16_t changed_endian_2Bytes(int16_t value);
 unsigned long changed_endian_4Bytes(unsigned long num);
 std::vector<int> find_marker(std::vector<unsigned char> _file_bytes);
 void file_to_data(std::vector<unsigned char> _file_bytes, std::vector<int> _marker_locations, std::vector<scan_data_struct> & _scan_data);
 void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_data_struct> & _screen_data);
-void normalize_adc(std::vector<screen_data_struct> & _screen_data);
+uint32_t crc32c(uint32_t crc, const unsigned char *buf, size_t len);
 
 std::vector<int> random_scans;
 
@@ -94,6 +100,8 @@ static GLint T0 = 0;
 GLfloat worldRotation[16] = {1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,1};
 
 void display();
-
+void idle();
+static void Print(const char* format , ...);
+static void reshape(int width, int height);
 
 #endif //ULTRASOUND_OPENGL_MAIN_H
