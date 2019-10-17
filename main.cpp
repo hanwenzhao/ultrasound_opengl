@@ -4,7 +4,7 @@ int main(int argc,char* argv[]) {
     //std::clock_t begin = clock();
     /* #################### DATA PROCESSING #################### */
     /* read binary file */
-    std::ifstream inFile("/home/hanwen/CLionProjects/ultrasound_opengl/short2.txt", std::ios::in | std::ios::binary);
+    std::ifstream inFile("/home/hanwen/ultrasound_opengl/short2.txt", std::ios::in | std::ios::binary);
     /* convert file to bytes vector */
     /* DO NOT USE ISTREAM_ITERATOR*/
     std::vector<unsigned char> file_bytes(
@@ -20,7 +20,7 @@ int main(int argc,char* argv[]) {
     srand((unsigned)time(0));
     glutInit(&argc, argv);
     glWindowPos2i =  (PFNGLWINDOWPOS2IPROC) glutGetProcAddress("glWindowPos2i");
-    glutInitWindowSize(1000, 1000);
+    glutInitWindowSize(1300, 1000);
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
     glutCreateWindow("ultrasound");
     glutDisplayFunc(display);
@@ -32,8 +32,12 @@ int main(int argc,char* argv[]) {
 
 void idle() {
     random_scans.clear();
+    std::random_device rd;  //Will be used to obtain a seed for the random number engine
+    std::mt19937 gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    std::uniform_int_distribution<> dis(0, screen_data.size()-1);
     for (i = 0; i < 500000; i++){
-        random_scans.push_back(rand() % screen_data.size());
+        //printf("%d\n",screen_data.size());
+        random_scans.push_back(dis(gen));
     }
     glutPostRedisplay();   // Post a re-paint request to activate display()
 }
@@ -59,7 +63,7 @@ void display(){
     glBegin(GL_POINTS);
     /* random draw */
     for (i = 0; i < (int)random_scans.size(); i++){
-        double intensity = screen_data.at(random_scans.at(i)).I;
+        double intensity = screen_data.at(random_scans.at(i)).I * 1.2;
         glColor3f(intensity, intensity, intensity);
         glVertex2d(screen_data.at(random_scans.at(i)).X,screen_data.at(random_scans.at(i)).Y);
     }

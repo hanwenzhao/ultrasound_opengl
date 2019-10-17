@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/hanwen/CLionProjects/ultrasound_opengl/main.cpp" "/home/hanwen/CLionProjects/ultrasound_opengl/cmake-build-debug/CMakeFiles/ultrasound_opengl_lib.dir/main.cpp.o"
+  "/home/hanwen/ultrasound_opengl/main.cpp" "/home/hanwen/ultrasound_opengl/cmake-build-debug/CMakeFiles/ultrasound_opengl_lib.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

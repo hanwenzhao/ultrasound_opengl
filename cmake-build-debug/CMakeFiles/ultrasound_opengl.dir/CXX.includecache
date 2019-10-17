@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/hanwen/CLionProjects/ultrasound_opengl/main.cpp
+/home/hanwen/ultrasound_opengl/main.cpp
 main.h
-/home/hanwen/CLionProjects/ultrasound_opengl/main.h
+/home/hanwen/ultrasound_opengl/main.h
 
-/home/hanwen/CLionProjects/ultrasound_opengl/main.h
+/home/hanwen/ultrasound_opengl/main.h
 iostream
 -
 cstdio
@@ -28,7 +28,7 @@ cstdarg
 fstream
 -
 omp.h
-/home/hanwen/CLionProjects/ultrasound_opengl/omp.h
+/home/hanwen/ultrasound_opengl/omp.h
 algorithm
 -
 cmath
