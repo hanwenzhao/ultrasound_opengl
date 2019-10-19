@@ -4,18 +4,25 @@ int main(int argc,char* argv[]) {
     //std::clock_t begin = clock();
     /* #################### DATA PROCESSING #################### */
     /* read binary file */
-    std::ifstream inFile("/home/hanwen/ultrasound_opengl/short2.txt", std::ios::in | std::ios::binary);
+    std::ifstream inFile("/home/hanwen/ultrasound_opengl/a_mode_quad1_1.txt", std::ios::in | std::ios::binary);
     /* convert file to bytes vector */
     /* DO NOT USE ISTREAM_ITERATOR*/
     std::vector<unsigned char> file_bytes(
             (std::istreambuf_iterator<char>(inFile)),
             (std::istreambuf_iterator<char>()));
+    for(i = 0; i < 20; i++){
+        printf("%02X ", file_bytes.at(i));
+    }
+    printf("\n");
     /* find all marker locations */
     marker_locations = find_marker(file_bytes);
     /* convert file bytes to data struct */
     file_to_data(file_bytes, marker_locations, scan_data);
     /* convert data to vertex on screen */
     data_to_pixel(scan_data, screen_data);
+    printf("Number of markers: %d\n", (int)marker_locations.size());
+    printf("Number of scan data: %d\n", (int)scan_data.size());
+    printf("Number of screen data: %d\n", (int)screen_data.size());
 
     srand((unsigned)time(0));
     glutInit(&argc, argv);
@@ -63,7 +70,7 @@ void display(){
     glBegin(GL_POINTS);
     /* random draw */
     for (i = 0; i < (int)random_scans.size(); i++){
-        double intensity = screen_data.at(random_scans.at(i)).I * 1.2;
+        double intensity = screen_data.at(random_scans.at(i)).I * 1.5;
         glColor3f(intensity, intensity, intensity);
         glVertex2d(screen_data.at(random_scans.at(i)).X,screen_data.at(random_scans.at(i)).Y);
     }
@@ -87,6 +94,7 @@ void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_
     //printf("%d\n", (int)_scan_data.size());
     for (i = 0; i < (int)_scan_data.size(); i++){
         double angle = _scan_data.at(i).encoder * 360.0 / 4096.0;
+        /*
         if (angle <= 115){
             angle = 295 + (360+angle-295)/6.0;
         }
@@ -97,6 +105,8 @@ void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_
             angle = 295 - (295-angle)/6.0;
         }
         angle = angle - 25;
+         */
+        angle = angle - 30;
         for (j = 0; j < 2490; j++){
             screen_data_struct temp_data = {(j+1) * Cos(angle), (j+1) * Sin(angle), 0, (double)_scan_data.at(i).buffer[j]};
             _screen_data.push_back(temp_data);
@@ -137,10 +147,9 @@ void file_to_data(std::vector<unsigned char> _file_bytes, std::vector<int> _mark
             crc_char[j] = _file_bytes.at(marker_index_next-(int)sizeof(crc_char)+j);
         }
         /* calculate crc locally */
-        mempcpy(crc_input, marker, sizeof(marker));
-        memcpy(crc_input+sizeof(marker), time_stamp_char, sizeof(time_stamp_char));
-        memcpy(crc_input+sizeof(marker)+sizeof(time_stamp_char), encoder_char, sizeof(encoder_char));
-        memcpy(crc_input+sizeof(marker)+sizeof(time_stamp_char)+sizeof(encoder_char), adc_char, sizeof(adc_char));
+        memcpy(crc_input, time_stamp_char, sizeof(time_stamp_char));
+        memcpy(crc_input+sizeof(time_stamp_char), encoder_char, sizeof(encoder_char));
+        memcpy(crc_input+sizeof(time_stamp_char)+sizeof(encoder_char), adc_char, sizeof(adc_char));
         crc_result = crc32c(0, crc_input, sizeof(crc_input));
         crc_result = changed_endian_4Bytes(crc_result);
         memcpy(crc_result_char, (unsigned char *)&crc_result, sizeof (crc_result));
@@ -249,4 +258,58 @@ static void reshape(int width, int height){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     glTranslatef(0.0, 0.0, -40.0);
+}
+
+/*
+ *  GLUT calls this routine when an arrow key is pressed
+ */
+void special(int key,int x,int y){
+    //  Right arrow key - increase angle by 5 degrees
+    if (key == GLUT_KEY_RIGHT)
+        th += 5;
+        //  Left arrow key - decrease angle by 5 degrees
+    else if (key == GLUT_KEY_LEFT)
+        th -= 5;
+        //  Up arrow key - increase elevation by 5 degrees
+    else if (key == GLUT_KEY_UP)
+    {
+        if (ph +5 < 90)
+        {
+            ph += 5;
+        }
+    }
+        //  Down arrow key - decrease elevation by 5 degrees
+    else if (key == GLUT_KEY_DOWN)
+    {
+        if (ph-5>0)
+        {
+            ph -= 5;
+        }
+    }
+    //  Keep angles to +/-360 degrees
+    th %= 360;
+    ph %= 360;
+    //  Tell GLUT it is necessary to redisplay the scene
+    glutPostRedisplay();
+}
+
+/*
+ *  Set projection
+ */
+void Project(double fov,double asp,double dim)
+{
+    //  Tell OpenGL we want to manipulate the projection matrix
+    glMatrixMode(GL_PROJECTION);
+    //  Undo previous transformations
+    glLoadIdentity();
+    //  Perspective transformation
+    if (fov)
+        gluPerspective(fov,asp,dim/16,16*dim);
+        //  Orthogonal transformation
+    else
+        glOrtho(-asp*dim,asp*dim,-dim,+dim,-dim,+dim);
+    //  Switch to manipulating the model matrix
+    glMatrixMode(GL_MODELVIEW);
+    //  Undo previous transformations
+    glLoadIdentity();
 }

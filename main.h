@@ -45,7 +45,7 @@ struct screen_data_struct{
 };
 
 /* Data Processing */
-const unsigned char marker[10] = {0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF};
+const unsigned char marker[10] = {0x00,0x01,0x00,0x01,0x00,0x01,0x00,0x01,0x00,0x01};
 int i, j, k, marker_index, marker_index_next,  buffer_length;
 int16_t adc_max = 0;
 int16_t adc_min = 0;
@@ -62,7 +62,7 @@ unsigned char adc_temp[2];
 unsigned char crc_char[4];
 uint32_t crc_result;
 unsigned char crc_result_char[4];
-unsigned char crc_input[10+4+2+2*2490];
+unsigned char crc_input[4+2+2*2490];
 int16_t adc;
 short buffer[2490];
 
@@ -75,6 +75,7 @@ void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_
 uint32_t crc32c(uint32_t crc, const unsigned char *buf, size_t len);
 
 std::vector<int> random_scans;
+
 
 PFNGLWINDOWPOS2IPROC glWindowPos2i;
 
@@ -103,5 +104,7 @@ void display();
 void idle();
 static void Print(const char* format , ...);
 static void reshape(int width, int height);
+void special(int key,int x,int y);
+void Project(double fov,double asp,double dim);
 
 #endif //ULTRASOUND_OPENGL_MAIN_H
