@@ -46,7 +46,7 @@ struct screen_data_struct{
 
 /* Data Processing */
 const unsigned char marker[10] = {0x00,0x01,0x00,0x01,0x00,0x01,0x00,0x01,0x00,0x01};
-int i, j, k, marker_index, marker_index_next,  buffer_length;
+int i, j, k, marker_index, marker_index_next, buffer_length, signal_draw_index;
 int16_t adc_max = 0;
 int16_t adc_min = 0;
 bool marker_flag;

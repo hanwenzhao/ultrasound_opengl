@@ -4,7 +4,7 @@ int main(int argc,char* argv[]) {
     //std::clock_t begin = clock();
     /* #################### DATA PROCESSING #################### */
     /* read binary file */
-    std::ifstream inFile("/home/hanwen/ultrasound_opengl/a_mode_quad1_1.txt", std::ios::in | std::ios::binary);
+    std::ifstream inFile("/home/hanwen/ultrasound_opengl/data/tapioca_1.txt", std::ios::in | std::ios::binary);
     /* convert file to bytes vector */
     /* DO NOT USE ISTREAM_ITERATOR*/
     std::vector<unsigned char> file_bytes(
@@ -46,6 +46,8 @@ void idle() {
         //printf("%d\n",screen_data.size());
         random_scans.push_back(dis(gen));
     }
+    std::uniform_int_distribution<> dis2(0, scan_data.size()-1);
+    signal_draw_index = dis2(gen);
     glutPostRedisplay();   // Post a re-paint request to activate display()
 }
 
@@ -70,10 +72,17 @@ void display(){
     glBegin(GL_POINTS);
     /* random draw */
     for (i = 0; i < (int)random_scans.size(); i++){
-        double intensity = screen_data.at(random_scans.at(i)).I * 1.5;
+        double intensity = screen_data.at(random_scans.at(i)).I * 1.8;
         glColor3f(intensity, intensity, intensity);
         glVertex2d(screen_data.at(random_scans.at(i)).X,screen_data.at(random_scans.at(i)).Y);
     }
+
+    /* draw signal */
+    glColor3f(1.0, 0.0, 0.0);
+    for (i = 0; i < (int)(sizeof(scan_data.at(signal_draw_index).buffer)/sizeof(scan_data.at(signal_draw_index).buffer[0])); i++){
+        glVertex2d(i-1000, scan_data.at(signal_draw_index).buffer[i]*500-2500);
+    }
+
 
     /* draw all */
     /*
@@ -94,7 +103,7 @@ void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_
     //printf("%d\n", (int)_scan_data.size());
     for (i = 0; i < (int)_scan_data.size(); i++){
         double angle = _scan_data.at(i).encoder * 360.0 / 4096.0;
-        /*
+
         if (angle <= 115){
             angle = 295 + (360+angle-295)/6.0;
         }
@@ -105,8 +114,8 @@ void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_
             angle = 295 - (295-angle)/6.0;
         }
         angle = angle - 25;
-         */
-        angle = angle - 30;
+
+        //angle = angle - 30;
         for (j = 0; j < 2490; j++){
             screen_data_struct temp_data = {(j+1) * Cos(angle), (j+1) * Sin(angle), 0, (double)_scan_data.at(i).buffer[j]};
             _screen_data.push_back(temp_data);
