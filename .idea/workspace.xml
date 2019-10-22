@@ -14,8 +14,74 @@
   <component name="ChangeListManager">
     <list default="true" id="67778185-c857-489c-aedf-fe7635870048" name="Default Changelist" comment="working graph">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/libultrasound_opengl_lib.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ultrasound_opengl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad1_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad1_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad1_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad2_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad2_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad2_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad3_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad3_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad3_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad4_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad4_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_quad4_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_upsidedown_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_upsidedown_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/a_mode_upsidedown_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_header_pin_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_header_pin_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_header_pin_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_metal_balls_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_metal_balls_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_metal_balls_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_quad1_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_quad1_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_quad1_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_small_cube_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_small_cube_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_small_cube_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_small_cube_upsidedown_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_small_cube_upsidedown_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_small_cube_upsidedown_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_small_cube_upsidedown_4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_thick_clear_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/b_mode_thick_clear_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/header_pin_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/header_pin_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/header_pin_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/tapioca_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/tapioca_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/tapioca_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad1_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad1_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad1_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad2_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad2_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad2_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad3_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad3_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad3_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad4_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad4_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_quad4_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_upsidedown_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_upsidedown_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/a_mode_upsidedown_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/dome1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/dome2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/dome3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/header_pin_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/header_pin_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/header_pin_3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/original1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/original2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/short2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/tapioca_1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/tapioca_2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/old_data/tapioca_3.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -91,6 +157,9 @@
       <workItem from="1571526860294" duration="3435000" />
       <workItem from="1571687944880" duration="14000" />
       <workItem from="1571765810276" duration="12000" />
+      <workItem from="1571780316289" duration="94000" />
+      <workItem from="1571780446292" duration="28000" />
+      <workItem from="1571780753869" duration="1166000" />
     </task>
     <task id="LOCAL-00001" summary="working on data processing">
       <created>1571185969981</created>

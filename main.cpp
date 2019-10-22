@@ -4,7 +4,11 @@ int main(int argc,char* argv[]) {
     //std::clock_t begin = clock();
     /* #################### DATA PROCESSING #################### */
     /* read binary file */
-    std::ifstream inFile("/home/hanwen/ultrasound_opengl/data/tapioca_1.txt", std::ios::in | std::ios::binary);
+    std::ifstream inFile("/home/hanwen/ultrasound_opengl/data/b_mode_small_cube_1.txt", std::ios::in | std::ios::binary);
+    if (!inFile){
+        printf("Failed to open file.\n");
+        return -1;
+    }
     /* convert file to bytes vector */
     /* DO NOT USE ISTREAM_ITERATOR*/
     std::vector<unsigned char> file_bytes(
@@ -98,25 +102,39 @@ void display(){
     glutSwapBuffers();
 }
 
+double map_range_to_range(double input_start, double input_end, double output_start, double output_end, double input){
+    return output_start + ((output_end - output_start) / (input_end - input_start)) * (input - input_start);
+}
+
+double convert_angle_2d_probe(double angle){
+    /* map 0 ~ 90 to 0 ~ -30 */
+    if ((angle >= 0) && (angle < 90)){
+        return map_range_to_range(0, 90, 0, -30, angle);
+    }
+    else if ((angle >= 90) && (angle < 180)){
+        /* map 90 ~ 180 to -30 ~ 0 */
+        return map_range_to_range(90, 180, -30, 0, angle);
+    }
+    else if ((angle >= 180) && (angle < 270)){
+        /* map 180 ~ 270 to 0 ~ 30 */
+        return map_range_to_range(180, 270, 0, 30, angle);
+    }
+    else if ((angle >= 270) && (angle <= 360)){
+        /* map 270 ~ 360 to 30 ~ 0 */
+        return map_range_to_range(270, 360, 30, 0, angle);
+    }
+
+}
+
 
 void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_data_struct> & _screen_data){
     //printf("%d\n", (int)_scan_data.size());
     for (i = 0; i < (int)_scan_data.size(); i++){
         double angle = _scan_data.at(i).encoder * 360.0 / 4096.0;
-
-        if (angle <= 115){
-            angle = 295 + (360+angle-295)/6.0;
-        }
-        else if (angle >= 295){
-            angle = 295 + (angle-295)/6.0;
-        }
-        else{
-            angle = 295 - (295-angle)/6.0;
-        }
-        angle = angle - 25;
-
-        //angle = angle - 30;
-        for (j = 0; j < 2490; j++){
+        angle = convert_angle_2d_probe(angle);
+        /* overall shifting */
+        angle = angle - 90;
+        for (j = 0; j < 2500; j++){
             screen_data_struct temp_data = {(j+1) * Cos(angle), (j+1) * Sin(angle), 0, (double)_scan_data.at(i).buffer[j]};
             _screen_data.push_back(temp_data);
         }
@@ -133,18 +151,21 @@ void file_to_data(std::vector<unsigned char> _file_bytes, std::vector<int> _mark
         }
         std::memcpy(&time_stamp, time_stamp_char, sizeof(time_stamp));
         time_stamp = changed_endian_4Bytes(time_stamp);
+        /* probe type char */
+        probe_type_char = _file_bytes.at(marker_index + sizeof(marker) + sizeof(time_stamp_char));
         /* encoder */
         for (j = 0; j < (int) sizeof(encoder_char); j++){
-            encoder_char[j] = _file_bytes.at(marker_index + sizeof(marker) + sizeof(time_stamp_char) + j);
+            encoder_char[j] = _file_bytes.at(marker_index + sizeof(marker) + sizeof(time_stamp_char) + sizeof(probe_type_char) + j);
         }
         std::memcpy(&encoder, encoder_char, sizeof(encoder));
         encoder = changed_endian_2Bytes(encoder);
         /* adc */
         /* determine the length of buffer */
-        buffer_length = (int)(_marker_locations.at(i+1) - _marker_locations.at(i) - sizeof(marker) - sizeof(time_stamp_char) - sizeof(encoder_char) - sizeof(crc_char))/2;
+        buffer_length = (int)(_marker_locations.at(i+1) - _marker_locations.at(i) - sizeof(marker) - sizeof(time_stamp_char) -
+                sizeof(probe_type_char) - sizeof(encoder_char) - sizeof(crc_char))/2;
         for (j = 0; j < buffer_length; j++){
             for (k = 0; k < (int)sizeof(adc_temp); k++){
-                adc_temp[k] = _file_bytes.at(marker_index + sizeof(marker) + sizeof(time_stamp_char) + sizeof(encoder_char) + j * 2 + k);
+                adc_temp[k] = _file_bytes.at(marker_index + sizeof(marker) + sizeof(time_stamp_char) + sizeof(probe_type_char) + sizeof(encoder_char) + j * 2 + k);
                 adc_char[2*j+k] = adc_temp[k];
             }
             std::memcpy(&adc, adc_temp, sizeof(adc));
@@ -157,8 +178,9 @@ void file_to_data(std::vector<unsigned char> _file_bytes, std::vector<int> _mark
         }
         /* calculate crc locally */
         memcpy(crc_input, time_stamp_char, sizeof(time_stamp_char));
-        memcpy(crc_input+sizeof(time_stamp_char), encoder_char, sizeof(encoder_char));
-        memcpy(crc_input+sizeof(time_stamp_char)+sizeof(encoder_char), adc_char, sizeof(adc_char));
+        memcpy(crc_input+sizeof(time_stamp_char), &probe_type_char, sizeof(probe_type_char));
+        memcpy(crc_input+sizeof(time_stamp_char)+sizeof(probe_type_char), encoder_char, sizeof(encoder_char));
+        memcpy(crc_input+sizeof(time_stamp_char)+sizeof(probe_type_char)+sizeof(encoder_char), adc_char, sizeof(adc_char));
         crc_result = crc32c(0, crc_input, sizeof(crc_input));
         crc_result = changed_endian_4Bytes(crc_result);
         memcpy(crc_result_char, (unsigned char *)&crc_result, sizeof (crc_result));

@@ -34,7 +34,7 @@
 struct scan_data_struct{
     unsigned long time_stamp;
     unsigned short encoder;
-    double buffer[2490];
+    double buffer[2500];
 };
 
 struct screen_data_struct{
@@ -55,16 +55,17 @@ std::vector<scan_data_struct> scan_data;
 std::vector<screen_data_struct> screen_data;
 unsigned char time_stamp_char[4];
 unsigned long time_stamp;
+unsigned char probe_type_char;
 unsigned char encoder_char[2];
 unsigned short encoder;
-unsigned char adc_char[2*2490];
+unsigned char adc_char[2*2500];
 unsigned char adc_temp[2];
 unsigned char crc_char[4];
 uint32_t crc_result;
 unsigned char crc_result_char[4];
-unsigned char crc_input[4+2+2*2490];
+unsigned char crc_input[4+1+2+2*2500];
 int16_t adc;
-short buffer[2490];
+short buffer[2500];
 
 int compare_crc(unsigned char a[], unsigned char b[], size_t len);
 int16_t changed_endian_2Bytes(int16_t value);
