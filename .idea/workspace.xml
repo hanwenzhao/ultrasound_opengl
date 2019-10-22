@@ -14,8 +14,8 @@
   <component name="ChangeListManager">
     <list default="true" id="67778185-c857-489c-aedf-fe7635870048" name="Default Changelist" comment="working graph">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.h" beforeDir="false" afterPath="$PROJECT_DIR$/main.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/libultrasound_opengl_lib.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/ultrasound_opengl" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,6 +89,8 @@
       <workItem from="1571422229623" duration="798000" />
       <workItem from="1571433127271" duration="277000" />
       <workItem from="1571526860294" duration="3435000" />
+      <workItem from="1571687944880" duration="14000" />
+      <workItem from="1571765810276" duration="12000" />
     </task>
     <task id="LOCAL-00001" summary="working on data processing">
       <created>1571185969981</created>
