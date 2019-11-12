@@ -85,8 +85,6 @@ ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libXi.so
 ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libGL.so
 ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libGLU.so
 ultrasound_opengl: libultrasound_opengl_lib.so
-ultrasound_opengl: /usr/lib/gcc/x86_64-linux-gnu/5/libgomp.so
-ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libpthread.so
 ultrasound_opengl: CMakeFiles/ultrasound_opengl.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/hanwen/ultrasound_opengl/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable ultrasound_opengl"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ultrasound_opengl.dir/link.txt --verbose=$(VERBOSE)

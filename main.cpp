@@ -4,7 +4,7 @@ int main(int argc,char* argv[]) {
     //std::clock_t begin = clock();
     /* #################### DATA PROCESSING #################### */
     /* read binary file */
-    std::ifstream inFile("/home/hanwen/ultrasound_opengl/data/b_mode_small_cube_1.txt", std::ios::in | std::ios::binary);
+    std::ifstream inFile("/home/hanwen/ultrasound_opengl/data/tapiopca_1.txt", std::ios::in | std::ios::binary);
     if (!inFile){
         printf("Failed to open file.\n");
         return -1;
@@ -41,6 +41,7 @@ int main(int argc,char* argv[]) {
     return 0;
 }
 
+
 void idle() {
     random_scans.clear();
     std::random_device rd;  //Will be used to obtain a seed for the random number engine
@@ -56,6 +57,10 @@ void idle() {
 }
 
 void display(){
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
+    glClear(GL_COLOR_BUFFER_BIT);         // Clear the color buffer (background)
+    glPointSize(1);
+
     Frames++;
     GLint t = glutGet(GLUT_ELAPSED_TIME);
     if (t - T0 >= 5000) {
@@ -69,35 +74,43 @@ void display(){
     glWindowPos2i(5,5);
     if (fps>0) Print("FPS %.3f", fps);
 
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
-    glClear(GL_COLOR_BUFFER_BIT);         // Clear the color buffer (background)
-    glPointSize(1);
+
+
     glBegin(GL_POINTS);
     /* random draw */
     for (i = 0; i < (int)random_scans.size(); i++){
-        double intensity = screen_data.at(random_scans.at(i)).I * 1.8;
+
+        intensity = screen_data.at(random_scans.at(i)).I * 2.0;
         glColor3f(intensity, intensity, intensity);
         glVertex2d(screen_data.at(random_scans.at(i)).X,screen_data.at(random_scans.at(i)).Y);
-    }
 
+    }
+    glEnd();
+
+    glBegin(GL_POINTS);
     /* draw signal */
     glColor3f(1.0, 0.0, 0.0);
+    short print_max = 0;
     for (i = 0; i < (int)(sizeof(scan_data.at(signal_draw_index).buffer)/sizeof(scan_data.at(signal_draw_index).buffer[0])); i++){
-        glVertex2d(i-1000, scan_data.at(signal_draw_index).buffer[i]*500-2500);
+        glVertex2d(i-1000, scan_data.at(signal_draw_index).buffer[i]-2400);
+        print_max = std::max(print_max, scan_data.at(signal_draw_index).buffer[i]);
     }
+    glEnd();
+
+    glWindowPos2i(5,450);
+    Print("Maximum Value: %d", print_max);
 
 
     /* draw all */
     /*
     for (i = 0; i < (int)screen_data.size(); i++){
-        double intensity = screen_data.at(i).I;
+        double intensity = screen_data.at(i).I * 1.5;
 
         glColor3f(intensity, intensity, intensity);
         glVertex2d(screen_data.at(i).X,screen_data.at(i).Y);
     }
      */
-    glEnd();
+
     glFlush();
     glutSwapBuffers();
 }
@@ -107,23 +120,20 @@ double map_range_to_range(double input_start, double input_end, double output_st
 }
 
 double convert_angle_2d_probe(double angle){
-    /* map 0 ~ 90 to 0 ~ -30 */
-    if ((angle >= 0) && (angle < 90)){
-        return map_range_to_range(0, 90, 0, -30, angle);
+    double left = 353; double right = 176; double top = 85; double bottom = 262;
+    if ((angle >= right) && (angle < bottom)){
+        return map_range_to_range(right, bottom, -120, -90, angle);
     }
-    else if ((angle >= 90) && (angle < 180)){
-        /* map 90 ~ 180 to -30 ~ 0 */
-        return map_range_to_range(90, 180, -30, 0, angle);
+    else if ((angle >= top) && (angle < right)){
+        return map_range_to_range(top, right, -90, -120, angle);
     }
-    else if ((angle >= 180) && (angle < 270)){
-        /* map 180 ~ 270 to 0 ~ 30 */
-        return map_range_to_range(180, 270, 0, 30, angle);
+    else if ((angle >= left) || (angle < top)){
+        if ((angle <= top)){angle = angle+360;}
+        return map_range_to_range(left, top+360, -60, -90, angle);
     }
-    else if ((angle >= 270) && (angle <= 360)){
-        /* map 270 ~ 360 to 30 ~ 0 */
-        return map_range_to_range(270, 360, 30, 0, angle);
+    else if ((angle >= bottom) && (angle <= left)){
+        return map_range_to_range(left, bottom, -60, -90, angle);
     }
-
 }
 
 
@@ -132,12 +142,18 @@ void data_to_pixel(std::vector<scan_data_struct> _scan_data, std::vector<screen_
     for (i = 0; i < (int)_scan_data.size(); i++){
         double angle = _scan_data.at(i).encoder * 360.0 / 4096.0;
         angle = convert_angle_2d_probe(angle);
-        /* overall shifting */
-        angle = angle - 90;
-        for (j = 0; j < 2500; j++){
-            screen_data_struct temp_data = {(j+1) * Cos(angle), (j+1) * Sin(angle), 0, (double)_scan_data.at(i).buffer[j]};
+        /* find min and max */
+        for (j = 0; j < buffer_length; j++){
+            adc_max = std::max(adc_max, _scan_data.at(i).buffer[j]);
+            adc_min = std::min(adc_min, _scan_data.at(i).buffer[j]);
+        }
+        /* normalize on the go */
+        for (j = 0; j < buffer_length; j++){
+            intensity = ((double)_scan_data.at(i).buffer[j] - adc_min)/(adc_max-adc_min);
+            screen_data_struct temp_data = {(j+1) * Cos(angle), (j+1) * Sin(angle), 0, intensity};
             _screen_data.push_back(temp_data);
         }
+        adc_max = 0; adc_min = 0;
     }
 }
 
@@ -189,17 +205,11 @@ void file_to_data(std::vector<unsigned char> _file_bytes, std::vector<int> _mark
             scan_data_struct temp_struct;
             temp_struct.time_stamp = time_stamp;
             temp_struct.encoder = encoder;
-            /* find min and max */
-            for (j = 0; j < buffer_length; j++){
-                adc_max = std::max(adc_max, buffer[j]);
-                adc_min = std::min(adc_min, buffer[j]);
-            }
             /* normalize on the go */
-            for (j = 0; j < buffer_length; j++){
-                temp_struct.buffer[j] = ((double)buffer[j] - adc_min)/(adc_max-adc_min);
+            for (j = 0; j < buffer_length; j++) {
+                temp_struct.buffer[j] = buffer[j];
                 //printf("Intensity:%f\n", temp_struct.buffer[j]);
             }
-            adc_max = 0; adc_min = 0;
             _scan_data.push_back(temp_struct);
         }
     }
@@ -266,7 +276,8 @@ uint32_t crc32c(uint32_t crc, const unsigned char *buf, size_t len)
     return ~crc;
 }
 
-static void Print(const char* format , ...){
+void Print(const char* format , ...)
+{
     char    buf[LEN];
     char*   ch=buf;
     va_list args;
@@ -276,7 +287,7 @@ static void Print(const char* format , ...){
     va_end(args);
     //  Display the characters one at a time at the current raster position
     while (*ch)
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,*ch++);
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,*ch++);
 }
 
 static void reshape(int width, int height){

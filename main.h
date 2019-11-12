@@ -34,7 +34,7 @@
 struct scan_data_struct{
     unsigned long time_stamp;
     unsigned short encoder;
-    double buffer[2500];
+    short buffer[2500];
 };
 
 struct screen_data_struct{
@@ -66,6 +66,7 @@ unsigned char crc_result_char[4];
 unsigned char crc_input[4+1+2+2*2500];
 int16_t adc;
 short buffer[2500];
+double intensity;
 
 int compare_crc(unsigned char a[], unsigned char b[], size_t len);
 int16_t changed_endian_2Bytes(int16_t value);
