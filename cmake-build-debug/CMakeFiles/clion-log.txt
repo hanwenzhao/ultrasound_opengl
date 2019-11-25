@@ -1,4 +1,5 @@
-/home/hanwen/clion-2019.2.4/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/hanwen/ultrasound_opengl
+/snap/clion/92/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/hanwen/ultrasound_opengl
+-- Found OpenGL: /usr/lib/x86_64-linux-gnu/libOpenGL.so   
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/hanwen/ultrasound_opengl/cmake-build-debug

@@ -4,7 +4,7 @@ int main(int argc,char* argv[]) {
     //std::clock_t begin = clock();
     /* #################### DATA PROCESSING #################### */
     /* read binary file */
-    std::ifstream inFile("/home/hanwen/ultrasound_opengl/data/tapiopca_1.txt", std::ios::in | std::ios::binary);
+    std::ifstream inFile("/home/hanwen/ultrasound_opengl/data/tapiopca_3.txt", std::ios::in | std::ios::binary);
     if (!inFile){
         printf("Failed to open file.\n");
         return -1;

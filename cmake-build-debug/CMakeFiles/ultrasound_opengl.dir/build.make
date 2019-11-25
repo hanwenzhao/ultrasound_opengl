@@ -34,10 +34,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/hanwen/clion-2019.2.4/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/92/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/hanwen/clion-2019.2.4/bin/cmake/linux/bin/cmake -E remove -f
+RM = /snap/clion/92/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -82,7 +82,8 @@ ultrasound_opengl: CMakeFiles/ultrasound_opengl.dir/build.make
 ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libglut.so
 ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libXmu.so
 ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libXi.so
-ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libGL.so
+ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libOpenGL.so
+ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libGLX.so
 ultrasound_opengl: /usr/lib/x86_64-linux-gnu/libGLU.so
 ultrasound_opengl: libultrasound_opengl_lib.so
 ultrasound_opengl: CMakeFiles/ultrasound_opengl.dir/link.txt
